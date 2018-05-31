@@ -46,17 +46,17 @@ build_script:
   - python -m pip install --upgrade pip
   - python -m pip install --upgrade setuptools
   - python -m pip install --upgrade pywin32 psutil six setuptools
+  # Install custom dependencies
+  - python -m pip install flask
+  - python -m pip install xlwt
+  - python -m pip install xlrd
+  - python -m pip install colorama
   # Generate the list of modules we need to import
   - del /S /Q %PYTHON%\*.pyc >NUL
   - del /S /Q %PYTHON%\*.pyo >NUL
   - python modules_pyexe.py pyexe.py
   # Install PyInstaller
   - python -m pip install pyinstaller
-  # Install custom dependencies
-  - python -m pip install flask
-  - python -m pip install xlwt
-  - python -m pip install xlrd
-  - python -m pip install colorama
   # Remove the site module hook from PyInstaller; we need the site module as is
   - "del /q %PYTHON%\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path\\hook-site.*"
   - "del /q /s %PYTHON%\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path\\__pycache__"
