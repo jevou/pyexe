@@ -1,25 +1,25 @@
 environment:
   matrix:
-    - PYTHON: "C:\\Python27"
-      INSTALL_OPTIONS: 2.7 --min=15
-      OUTPUT: "py27.exe"
-      ALTPYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python27-x64"
-      INSTALL_OPTIONS: 2.7 --min=15 --64
-      OUTPUT: "py27-64.exe"
-      ALTPYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python35"
-      INSTALL_OPTIONS: 3.5 --min=4
-      OUTPUT: "py35.exe"
-      ALTPYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python35-x64"
-      INSTALL_OPTIONS: 3.5 --min=4 --64
-      OUTPUT: "py35-64.exe"
-      ALTPYTHON: "C:\\Python36-x64"
-    - PYTHON: "C:\\Python36"
-      INSTALL_OPTIONS: 3.6 --min=5
-      OUTPUT: "py36.exe"
-      ALTPYTHON: "C:\\Python36-x64"
+#    - PYTHON: "C:\\Python27"
+#      INSTALL_OPTIONS: 2.7 --min=15
+#      OUTPUT: "py27.exe"
+#      ALTPYTHON: "C:\\Python36-x64"
+#    - PYTHON: "C:\\Python27-x64"
+#      INSTALL_OPTIONS: 2.7 --min=15 --64
+#      OUTPUT: "py27-64.exe"
+#      ALTPYTHON: "C:\\Python36-x64"
+#    - PYTHON: "C:\\Python35"
+#      INSTALL_OPTIONS: 3.5 --min=4
+#      OUTPUT: "py35.exe"
+#      ALTPYTHON: "C:\\Python36-x64"
+#    - PYTHON: "C:\\Python35-x64"
+#      INSTALL_OPTIONS: 3.5 --min=4 --64
+#      OUTPUT: "py35-64.exe"
+#      ALTPYTHON: "C:\\Python36-x64"
+#    - PYTHON: "C:\\Python36"
+#      INSTALL_OPTIONS: 3.6 --min=5
+#      OUTPUT: "py36.exe"
+#      ALTPYTHON: "C:\\Python36-x64"
     - PYTHON: "C:\\Python36-x64"
       INSTALL_OPTIONS: 3.6 --min=5 --64
       OUTPUT: "py36-64.exe"
@@ -72,43 +72,43 @@ build_script:
   # Save the artifact immediately
   - appveyor PushArtifact %OUTPUT%
 
-test_script:
-  # Report version
-  - "%OUTPUT% -VV"
-  # Sometimes we send test data to this directory
-  - mkdir c:\temp
-  - SET PATH=%ORIGPATH%
-  - pip install pytest
-  - cd tests
-  # Build a zipapp for our tests; it doesn't exist before 3.5, our we could use
-  # our own executable to do it.
-  - C:\Python36-x64\python -m zipapp --output ..\sample_zipapp.pyz -p "/usr/bin/env python" sample_zipapp
-  # Make sure we only have original files here.
-  - git clean -fxd .
-  - "python -m pytest -l --cache-clear --exe=..\\%OUTPUT%"
-  # We can test the tests against the master python.  We have to exclude a few
-  # tests that only work on the stand-alone build.
-  # Make sure we only have original files here.
-  - git clean -fxd .
-  - 'python -m pytest -l --cache-clear --exe=%PYTHON%\python -m "not pyexe"'
-
-deploy:
-  - provider: GitHub
-    tag: 'pyexe-latest'
-    release: 'Release pyexe-latest'
-    auth_token:
-      secure: PGsGUDU6oqIy7zCyTMwIWlzf4TbJtuIgqmWb9ZLqNlM13AAaxWfDlzDlG+0CyHFx
-    artifact: "%OUTPUT%"
-    force_update: true
-    on:
-      branch: master
-
-  - provider: GitHub
-    tag: $(appveyor_repo_tag_name)
-    release: Release $(appveyor_repo_tag_name)
-    auth_token:
-      secure: PGsGUDU6oqIy7zCyTMwIWlzf4TbJtuIgqmWb9ZLqNlM13AAaxWfDlzDlG+0CyHFx
-    artifact: "%OUTPUT%"
-    force_update: true
-    on:
-      appveyor_repo_tag: true
+#test_script:
+#  # Report version
+#  - "%OUTPUT% -VV"
+#  # Sometimes we send test data to this directory
+#  - mkdir c:\temp
+#  - SET PATH=%ORIGPATH%
+#  - pip install pytest
+#  - cd tests
+#  # Build a zipapp for our tests; it doesn't exist before 3.5, our we could use
+#  # our own executable to do it.
+#  - C:\Python36-x64\python -m zipapp --output ..\sample_zipapp.pyz -p "/usr/bin/env python" sample_zipapp
+#  # Make sure we only have original files here.
+#  - git clean -fxd .
+#  - "python -m pytest -l --cache-clear --exe=..\\%OUTPUT%"
+#  # We can test the tests against the master python.  We have to exclude a few
+#  # tests that only work on the stand-alone build.
+#  # Make sure we only have original files here.
+#  - git clean -fxd .
+#  - 'python -m pytest -l --cache-clear --exe=%PYTHON%\python -m "not pyexe"'
+#
+#deploy:
+#  - provider: GitHub
+#    tag: 'pyexe-latest'
+#    release: 'Release pyexe-latest'
+#    auth_token:
+#      secure: PGsGUDU6oqIy7zCyTMwIWlzf4TbJtuIgqmWb9ZLqNlM13AAaxWfDlzDlG+0CyHFx
+#    artifact: "%OUTPUT%"
+#    force_update: true
+#    on:
+#      branch: master
+#
+#  - provider: GitHub
+#    tag: $(appveyor_repo_tag_name)
+#    release: Release $(appveyor_repo_tag_name)
+#    auth_token:
+#      secure: PGsGUDU6oqIy7zCyTMwIWlzf4TbJtuIgqmWb9ZLqNlM13AAaxWfDlzDlG+0CyHFx
+#    artifact: "%OUTPUT%"
+#    force_update: true
+#    on:
+#      appveyor_repo_tag: true
