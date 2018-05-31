@@ -103,3 +103,5 @@ ENV/
 # Our list
 .pytest_cache/
 modules_pyexe_list.py
+
+.vscode

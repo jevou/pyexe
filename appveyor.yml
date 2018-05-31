@@ -47,10 +47,10 @@ build_script:
   - python -m pip install --upgrade setuptools
   - python -m pip install --upgrade pywin32 psutil six setuptools
   # Install custom dependencies
-  - python -m pip install flask
-  - python -m pip install xlwt
-  - python -m pip install xlrd
-  - python -m pip install colorama
+  - pip install flask
+  - pip install xlwt
+  - pip install xlrd
+  - pip install colorama
   # Generate the list of modules we need to import
   - del /S /Q %PYTHON%\*.pyc >NUL
   - del /S /Q %PYTHON%\*.pyo >NUL
